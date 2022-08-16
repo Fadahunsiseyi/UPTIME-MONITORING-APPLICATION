@@ -5,6 +5,7 @@ Primary file for the APi
 //Dependencies
 
 var http = require('http')
+var url = require('url');
 
 //The server should respond to all request with a string
 
