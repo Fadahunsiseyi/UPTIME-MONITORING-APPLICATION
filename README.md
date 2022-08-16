@@ -1,8 +1,8 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Todo Application
+# RESTFUL API
 
-> This is an application that stores lists of books
+> Building a RESTFUL API for an uptime monitoring application.
 
 
 ## Live Demo
@@ -10,10 +10,9 @@
 [Live demo](Live soon)
 ## Built With
 
-- HTML
-- CSS
+- Nodejs
 - Javascript
-- React
+- Postman
 
 ## Getting Started
 
