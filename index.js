@@ -23,6 +23,7 @@ var server = http.createServer((req,res) => {
     res.end('Hello world\n');
 
     //Log the request path
+    console.log('Request is received on path :'+trimmedPath);
 
 })
 
