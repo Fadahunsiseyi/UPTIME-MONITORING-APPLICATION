@@ -13,12 +13,16 @@ var server = http.createServer((req,res) => {
 
     //Get the url and parse it
     const parsedUrl = url.parse(req.url, true);
-    console.log(parsedUrl);
+    // console.log(parsedUrl);
 
     //Get the path
     var path = parsedUrl.pathname
     var trimmedPath = path.replace(/^\/+|\/+$/g,'')
     var method = req.method.toLowerCase()
+
+    //Get query string from a url
+    const queryStringObject = parsedUrl.query
+    console.log(queryStringObject,'line 25')
 
     //Get the response
     res.end('Hello world\n');
