@@ -6,6 +6,7 @@ Primary file for the API
 
 var http = require("http");
 var url = require("url");
+var StringDecoder = require('string_decoder').StringDecoder;
 
 //The server should respond to all request with a string
 
@@ -24,6 +25,9 @@ var server = http.createServer((req, res) => {
   //Get the headers 
   var headers = req.headers
   console.log(headers);
+
+  //Get the payload if any
+  var decoder = new StringDecoder('utf-8')
 
   //Get the response
   res.end("Hello world\n");
