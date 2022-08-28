@@ -4,6 +4,7 @@ Primary file for the API
 
 //Dependencies
 
+const { log } = require("console");
 var http = require("http");
 var url = require("url");
 var StringDecoder = require("string_decoder").StringDecoder;
@@ -35,17 +36,51 @@ var server = http.createServer((req, res) => {
   req.on("end", () => {
     buffer += decoder.end();
 
-    //Get the response
-    res.end("Hello world\n");
+    //choose the handler the request should go to, else go to the notFound handler
 
-    //Log the request path
-    console.log("Request is received on path: ", queryStringObject);
-    console.log("Request is received with payload: ", buffer);
+    const chosenHandler =
+      typeof router[trimmedPath] !== "undefined"
+        ? router[trimmedPath]
+        : handlers.notFound;
+    const data = {
+      trimmedPath,
+      method,
+      headers,
+      buffer,
+      queryStringObject,
+    };
+    chosenHandler(data, (statusCode, payload) => {
+      console.log(data);
+      statusCode = typeof statusCode !== undefined ? statusCode : 200;
+      payload = typeof payload === "object" ? payload : {};
+      const payloadString = JSON.stringify(payload);
+      //Get the response
+      res.writeHead(statusCode);
+      res.end(payloadString);
+
+      //Log the request path
+      console.log("Returning this response :", statusCode, payload);
+    });
   });
 });
 
 //Start the server and let it listen on port 3000
-
 server.listen(4000, () => {
   console.log("The server is listening on port 4000");
 });
+
+const handlers = {};
+
+handlers.sample = (data, callback) => {
+  callback(406, { name: "sample handler" });
+};
+
+handlers.notFound = (data, callback) => {
+  callback(404);
+};
+
+//Routes
+
+const router = {
+  sample: handlers.sample,
+};
