@@ -4,10 +4,10 @@ Primary file for the API
 
 //Dependencies
 
-const { log } = require("console");
-var http = require("http");
-var url = require("url");
-var StringDecoder = require("string_decoder").StringDecoder;
+const http = require("http");
+const url = require("url");
+const StringDecoder = require("string_decoder").StringDecoder;
+const config = require('./config')
 
 //The server should respond to all request with a string
 
@@ -66,8 +66,8 @@ var server = http.createServer((req, res) => {
 });
 
 //Start the server and let it listen on port 3000
-server.listen(4000, () => {
-  console.log("The server is listening on port 4000");
+server.listen(config, () => {
+  console.log("The server is listening on port "+config.port+", in "+config.envName+" mode");
 });
 
 const handlers = {};
