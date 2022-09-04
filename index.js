@@ -5,9 +5,11 @@ Primary file for the API
 //Dependencies
 
 const http = require("http");
+const https = require("https");
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 const config = require('./config')
+const fs = require("fs");
 
 //Instantiate the HTTP server
 
@@ -15,15 +17,34 @@ var httpServer = http.createServer((req, res) => {
    unifiedServer(req, res)
 });
 
-//Start the server and let it listen on port 3000
+//Start the http server
 httpServer.listen(config.httpPort, () => {
   console.log("The server is listening on port "+config.httpPort+", in "+config.envName+" mode");
 });
 
 
+//Instantiate the HTTP server
+
+const httpsServerOptions = {
+  'key': fs.readFileSync('./https/key.pem'),
+  'cert': fs.readFileSync('./https/cert.pem'),
+}
+
+var httpsServer = https.createServer(httpsServerOptions,(req, res) => {
+  unifiedServer(req, res)
+});
+
+
+//Start the https server
+httpsServer.listen(config.httpsPort, () => {
+  console.log("The server is listening on port "+config.httpsPort+", in "+config.envName+" mode");
+});
+
+
+
 // All the server logic for the htto and https server
 
-const unifiedServer = (req, res) => { 
+const unifiedServer = (req, res) => {
     //Get the url and parse it
     const parsedUrl = url.parse(req.url, true);
     // console.log(parsedUrl);
