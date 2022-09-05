@@ -9,9 +9,14 @@ const https = require("https");
 const config = require("./config");
 const fs = require("fs");
 const UnifiedServer = require("./UnifiedServer.js");
+const _data = require('./lib/data');
+
+
+_data.create('test','newFile', {'foo': 'bar'},(err) => {
+  console.log('this was the error: ',err)
+})
 
 //Instantiate the HTTP server
-
 var httpServer = http.createServer((req, res) => {
   UnifiedServer(req, res);
 });
