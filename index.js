@@ -12,8 +12,8 @@ const UnifiedServer = require("./UnifiedServer.js");
 const _data = require('./lib/data');
 
 
-_data.read('test','newFile',(err, data) => {
-  console.log('this was the error: ',err, data)
+_data.update('test','newFile',{'fizz-edit': 'buzz-edit'},(err) => {
+  console.log('this was the error: ',err)
 })
 
 //Instantiate the HTTP server
