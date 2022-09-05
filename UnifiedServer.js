@@ -2,7 +2,7 @@
 const url = require("url");
 const StringDecoder = require("string_decoder").StringDecoder;
 
-// All the server logic for the htto and https server
+// All the server logic for the http and https server
 
 const unifiedServer = (req, res) => {
     //Get the url and parse it
@@ -61,7 +61,7 @@ const unifiedServer = (req, res) => {
 const handlers = {};
 
 handlers.ping = (data, callback) => {
-  callback(200, { name: "sample handler" });
+  callback(200);
 };
 
 handlers.notFound = (data, callback) => {
