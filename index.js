@@ -12,7 +12,7 @@ const UnifiedServer = require("./UnifiedServer.js");
 const _data = require('./lib/data');
 
 
-_data.update('test','newFile',{'fizz-edit': 'buzz-edit'},(err) => {
+_data.delete('test','newFile',(err) => {
   console.log('this was the error: ',err)
 })
 
