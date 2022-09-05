@@ -12,8 +12,8 @@ const UnifiedServer = require("./UnifiedServer.js");
 const _data = require('./lib/data');
 
 
-_data.create('test','newFile', {'foo': 'bar'},(err) => {
-  console.log('this was the error: ',err)
+_data.read('test','newFile',(err, data) => {
+  console.log('this was the error: ',err, data)
 })
 
 //Instantiate the HTTP server
