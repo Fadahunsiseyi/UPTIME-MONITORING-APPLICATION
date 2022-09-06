@@ -6,15 +6,14 @@ Primary file for the API
 
 const http = require("http");
 const https = require("https");
-const config = require("./config");
+const config = require("./lib/config");
 const fs = require("fs");
 const UnifiedServer = require("./UnifiedServer.js");
-const _data = require('./lib/data');
 
 
-_data.delete('test','newFile',(err) => {
-  console.log('this was the error: ',err)
-})
+// _data.delete('test','newFile',(err) => {
+//   console.log('this was the error: ',err)
+// })
 
 //Instantiate the HTTP server
 var httpServer = http.createServer((req, res) => {

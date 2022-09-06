@@ -1,5 +1,7 @@
 
 const url = require("url");
+const handlers = require("./lib/handlers");
+const helpers = require("./lib/helpers");
 const StringDecoder = require("string_decoder").StringDecoder;
 
 // All the server logic for the http and https server
@@ -39,7 +41,7 @@ const unifiedServer = (req, res) => {
         trimmedPath,
         method,
         headers,
-        buffer,
+        payload: helpers.parseJsonToObject(buffer),
         queryStringObject,
       };
       chosenHandler(data, (statusCode, payload) => {
@@ -58,21 +60,13 @@ const unifiedServer = (req, res) => {
     });
 }
 
-const handlers = {};
-
-handlers.ping = (data, callback) => {
-  callback(200);
-};
-
-handlers.notFound = (data, callback) => {
-  callback(404);
-};
 
 //Routes
 
 const router = {
   ping: handlers.ping,
+  users: handlers.users,
 };
 
 
-module.exports = unifiedServer
+module.exports = unifiedServer;
