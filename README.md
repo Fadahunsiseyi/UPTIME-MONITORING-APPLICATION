@@ -2,8 +2,10 @@
 
 # RESTFUL API
 
-> Building a RESTFUL API for an uptime monitoring application.
-
+> Building a RESTFUL API for an uptime monitoring application. It allows users to enter URLs they want monitored, and receives alerts when those resources go down and come up.
+> The API listens on a PORT and accepts incoming HTTP requests for POST,GET,PUT and DELETE requests.
+> The API allows a client to connect, then create a new user, then edit and delete that user. The API allows a user to SIGN  IN which gives them a token that they can use for subsequent authenticated requests. The API allows the users to SIGN OUT,
+ which invalidates their token.
 
 ## Live Demo
 
@@ -26,10 +28,10 @@
 
 - Run git clone on this project at the desired directory:
   ```
-  git clone https://github.com/Fadahunsiseyi/react-book-store.git
+  git clone https://github.com/Fadahunsiseyi/nodejs_mastery.git
   ```
   ```
-  cd react-book-store
+  cd nodejs_mastery
   ```
 - Install dependencies
 
@@ -41,14 +43,7 @@
   ```
   npm run start
   ```
-- On your favourite browser go to http://localhost:3000/
-
-### Tests
-
-- **Webhint** linter -`npx hint .` on the root directory.
-- **Stylelint** linter - `npx stylelint "**/*.{css,scss}"` on the root directory.
-- **ESLint** linter - `npx eslint .` on the root directory.
-
+- On your favourite browser go to http://localhost:4000/
 ## Authors
 
 👤 **Fadahunsi seyi**
@@ -62,7 +57,7 @@
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](https://github.com/Fadahunsiseyi/react-book-store/issues).
+Feel free to check the [issues page](https://github.com/Fadahunsiseyi/nodejs_mastery/issues).
 
 ## Show your support
 
@@ -70,4 +65,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](https://github.com/Fadahunsiseyi/react-book-store/blob/develop/LICENSE) licensed.
+This project is [MIT](https://github.com/Fadahunsiseyi/nodejs_mastery/blob/develop/LICENSE) licensed.
