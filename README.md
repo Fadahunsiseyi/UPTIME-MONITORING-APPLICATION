@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# RESTFUL API
+# RESTFUL API (BACKEND SERVICE)
 
 > Building a RESTFUL API for an uptime monitoring application. It allows users to enter URLs they want monitored, and receives alerts when those resources go down and come up.
 > The API listens on a PORT and accepts incoming HTTP requests for POST,GET,PUT and DELETE requests.
