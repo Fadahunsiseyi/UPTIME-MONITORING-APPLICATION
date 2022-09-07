@@ -20,7 +20,7 @@ const unifiedServer = (req, res) => {
   
     //Get the headers
     var headers = req.headers;
-    console.log(headers);
+    console.log(headers,'header line 23');
   
     //Get the payload if any
     var decoder = new StringDecoder("utf-8");
@@ -45,10 +45,11 @@ const unifiedServer = (req, res) => {
         queryStringObject,
       };
       chosenHandler(data, (statusCode, payload) => {
-        console.log(data);
+        console.log(data,'from te handler in unifiedServer');
         statusCode = typeof statusCode !== undefined ? statusCode : 200;
         payload = typeof payload === "object" ? payload : {};
         const payloadString = JSON.stringify(payload);
+        console.log(payloadString,'line 52')
         //Get the response
         res.setHeader('Content-Type', 'application/json');
         res.writeHead(statusCode);
@@ -66,6 +67,7 @@ const unifiedServer = (req, res) => {
 const router = {
   ping: handlers.ping,
   users: handlers.users,
+  tokens: handlers.tokens,
 };
 
 
