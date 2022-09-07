@@ -20,7 +20,7 @@ const unifiedServer = (req, res) => {
   
     //Get the headers
     var headers = req.headers;
-    console.log(headers);
+    console.log(headers,'header line 23');
   
     //Get the payload if any
     var decoder = new StringDecoder("utf-8");
