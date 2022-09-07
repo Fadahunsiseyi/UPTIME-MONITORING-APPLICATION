@@ -45,10 +45,11 @@ const unifiedServer = (req, res) => {
         queryStringObject,
       };
       chosenHandler(data, (statusCode, payload) => {
-        console.log(data);
+        console.log(data,'from te handler in unifiedServer');
         statusCode = typeof statusCode !== undefined ? statusCode : 200;
         payload = typeof payload === "object" ? payload : {};
         const payloadString = JSON.stringify(payload);
+        console.log(payloadString,'line 52')
         //Get the response
         res.setHeader('Content-Type', 'application/json');
         res.writeHead(statusCode);
