@@ -9,11 +9,18 @@ const https = require("https");
 const config = require("./lib/config");
 const fs = require("fs");
 const UnifiedServer = require("./UnifiedServer.js");
+const helpers = require("./lib/helpers");
 
 
 // _data.delete('test','newFile',(err) => {
 //   console.log('this was the error: ',err)
 // })
+
+//@TODO 
+
+helpers.sendTwilioSms('4158375309','hello world',(err) =>{
+  console.log('Error message: ',err)
+})
 
 //Instantiate the HTTP server
 var httpServer = http.createServer((req, res) => {
