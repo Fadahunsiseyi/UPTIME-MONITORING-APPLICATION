@@ -1,60 +1,20 @@
-/*
-Primary file for the API
-*/
+
 
 //Dependencies
 
-const http = require("http");
-const https = require("https");
-const config = require("./lib/config");
-const fs = require("fs");
-const UnifiedServer = require("./UnifiedServer.js");
-const helpers = require("./lib/helpers");
+const server = require('./lib/server');
+const workers = require('./lib/workers');
 
+//Declare the application
+const app = {};
 
-// _data.delete('test','newFile',(err) => {
-//   console.log('this was the error: ',err)
-// })
+app.init = () => {
+  //Start the server
+  server.init();
+  //Start the workers
+  workers.init();
+}
 
-//@TODO 
+app.init()
 
-helpers.sendTwilioSms('4158375309','hello world',(err) =>{
-  console.log('Error message: ',err)
-})
-
-//Instantiate the HTTP server
-var httpServer = http.createServer((req, res) => {
-  UnifiedServer(req, res);
-});
-
-//Start the http server
-httpServer.listen(config.httpPort, () => {
-  console.log(
-    "The server is listening on port " +
-      config.httpPort +
-      ", in " +
-      config.envName +
-      " mode"
-  );
-});
-
-//Instantiate the HTTP server
-const httpsServerOptions = {
-  key: fs.readFileSync("./https/key.pem"),
-  cert: fs.readFileSync("./https/cert.pem"),
-};
-
-var httpsServer = https.createServer(httpsServerOptions, (req, res) => {
-  UnifiedServer(req, res);
-});
-
-//Start the https server
-httpsServer.listen(config.httpsPort, () => {
-  console.log(
-    "The server is listening on port " +
-      config.httpsPort +
-      ", in " +
-      config.envName +
-      " mode"
-  );
-});
+module.exports = app;
