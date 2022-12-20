@@ -12,8 +12,8 @@
 
     <!-- Static Assets -->
     <link type="image/x-icon" rel="icon" href="favicon.ico">
-    <script type="text/javascript" charset="utf-8" src="public/app.js"></script>
-    <link rel="stylesheet" type="text/css" href="public/app.css" />
+    <script type="text/javascript" charset="utf-8" src="/public/app.js"></script>
+    <link rel="stylesheet" type="text/css" href="/public/app.css" />
 
   </head>
   <body class="{body.class}">
@@ -22,26 +22,28 @@
       <!-- Header -->
       <div class="header">
         <!-- Logo -->
-        <a class="logo" href="/"></a>
+        <a class="logo" href="/">
+          <img src="public/logo.png" alt="logo">
+        </a>
         <!-- Navigation -->
         <ul class="menu">
           <li>
             <a href="/">Home</a>
           </li>
-          <li class="loggedOut">
-            <a href="/">Signup</a>
+          <li>
+            <a class="loggedOut" href="/account/create">Signup</a>
           </li>
-          <li class="loggedOut">
-            <a href="/">Login</a>
+          <li>
+            <a  class="loggedOut" href="/session/create">Login</a>
           </li>
-          <li class="loggedIn">
-            <a href="/">Dashboard</a>
+          <li>
+            <a  class="loggedIn" href="/checks/all">Dashboard</a>
           </li>
-          <li class="loggedIn">
-            <a href="/">Account Settings</a>
+          <li>
+            <a  class="loggedIn" href="/account/edit">Account Settings</a>
           </li>
-          <li class="loggedIn">
-            <a href="/">Logout</a>
+          <li>
+            <a  class="loggedIn" href="#">Logout</a>
           </li>
         </ul>
       </div>
