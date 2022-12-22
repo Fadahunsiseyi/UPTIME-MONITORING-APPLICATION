@@ -126,8 +126,36 @@ app.bindForms = function(){
     if(formId == 'accountCreate'){
       // @TODO Do something here now that the account has been created successfully
       console.log('The account has been created successfully')
+          // Take the phone and password, and use it to log the user in
+    var newPayload = {
+        'phone' : requestPayload.phone,
+        'password' : requestPayload.password
+      };
+      app.client.request(undefined,'api/tokens','POST',undefined,newPayload,function(newStatusCode,newResponsePayload){
+        // Display an error on the form if needed
+        if(newStatusCode !== 200){
+  
+          // Set the formError field with the error text
+          document.querySelector("#"+formId+" .formError").innerHTML = 'Sorry, an error has occured. Please try again.';
+  
+          // Show (unhide) the form error field on the form
+          document.querySelector("#"+formId+" .formError").style.display = 'block';
+  
+        } else {
+          // If successful, set the token and redirect the user
+          app.setSessionToken(newResponsePayload);
+          window.location = '/checks/all';
+        }
+      });
     }
-  };
+      // If login was successful, set the token in localstorage and redirect the user
+  if(formId == 'sessionCreate'){
+    app.setSessionToken(responsePayload);
+    window.location = '/checks/all';
+  }
+  }
+
+  
   
   // Init (bootstrapping)
   app.init = function(){
