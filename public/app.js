@@ -4,7 +4,7 @@
  */
 
 // Container for frontend application
-const app = {};
+let app = {};
 
 // Config
 app.config = {
@@ -28,7 +28,7 @@ app.client.request = function(headers,path,method,queryStringObject,payload,call
   // For each query string parameter sent, add it to the path
   let requestUrl = path+'?';
   let counter = 0;
-  for(const queryKey in queryStringObject){
+  for(let queryKey in queryStringObject){
      if(queryStringObject.hasOwnProperty(queryKey)){
        counter++;
        // If at least one query string parameter has already been added, preprend new ones with an ampersand
@@ -41,12 +41,12 @@ app.client.request = function(headers,path,method,queryStringObject,payload,call
   }
 
   // Form the http request as a JSON type
-  const xhr = new XMLHttpRequest();
+  let xhr = new XMLHttpRequest();
   xhr.open(method, requestUrl, true);
   xhr.setRequestHeader("Content-type", "application/json");
 
   // For each header sent, add it to the request
-  for(const headerKey in headers){
+  for(let headerKey in headers){
      if(headers.hasOwnProperty(headerKey)){
        xhr.setRequestHeader(headerKey, headers[headerKey]);
      }
@@ -60,13 +60,13 @@ app.client.request = function(headers,path,method,queryStringObject,payload,call
   // When the request comes back, handle the response
   xhr.onreadystatechange = function() {
       if(xhr.readyState == XMLHttpRequest.DONE) {
-        const statusCode = xhr.status;
-        const responseReturned = xhr.responseText;
+        let statusCode = xhr.status;
+        let responseReturned = xhr.responseText;
 
         // Callback if requested
         if(callback){
           try{
-            const parsedResponse = JSON.parse(responseReturned);
+            let parsedResponse = JSON.parse(responseReturned);
             callback(statusCode,parsedResponse);
           } catch(e){
             callback(statusCode,false);
@@ -77,7 +77,7 @@ app.client.request = function(headers,path,method,queryStringObject,payload,call
   }
 
   // Send the payload as JSON
-  const payloadString = JSON.stringify(payload);
+  let payloadString = JSON.stringify(payload);
   xhr.send(payloadString);
 
 };
@@ -96,12 +96,15 @@ app.bindLogoutButton = function(){
 };
 
 // Log the user out then redirect them
-app.logUserOut = function(){
+app.logUserOut = function(redirectUser){
+  // Set redirectUser to default to true
+  redirectUser = typeof(redirectUser) == 'boolean' ? redirectUser : true;
+
   // Get the current token id
-  const tokenId = typeof(app.config.sessionToken.id) == 'string' ? app.config.sessionToken.id : false;
+  let tokenId = typeof(app.config.sessionToken.id) == 'string' ? app.config.sessionToken.id : false;
 
   // Send the current token to the tokens endpoint to delete it
-  const queryStringObject = {
+  let queryStringObject = {
     'id' : tokenId
   };
   app.client.request(undefined,'api/tokens','DELETE',queryStringObject,undefined,function(statusCode,responsePayload){
@@ -109,7 +112,9 @@ app.logUserOut = function(){
     app.setSessionToken(false);
 
     // Send the user to the logged out page
-    window.location = '/session/deleted';
+    if(redirectUser){
+      window.location = '/session/deleted';
+    }
 
   });
 };
@@ -118,15 +123,15 @@ app.logUserOut = function(){
 app.bindForms = function(){
   if(document.querySelector("form")){
 
-    const allForms = document.querySelectorAll("form");
-    for(const i = 0; i < allForms.length; i++){
+    let allForms = document.querySelectorAll("form");
+    for(let i = 0; i < allForms.length; i++){
         allForms[i].addEventListener("submit", function(e){
 
         // Stop it from submitting
         e.preventDefault();
-        const formId = this.id;
-        const path = this.action;
-        const method = this.method.toUpperCase();
+        let formId = this.id;
+        let path = this.action;
+        let method = this.method.toUpperCase();
 
         // Hide the error message (if it's currently shown due to a previous error)
         document.querySelector("#"+formId+" .formError").style.display = 'none';
@@ -138,11 +143,11 @@ app.bindForms = function(){
 
 
         // Turn the inputs into a payload
-        const payload = {};
-        const elements = this.elements;
-        for(const i = 0; i < elements.length; i++){
+        let payload = {};
+        let elements = this.elements;
+        for(let i = 0; i < elements.length; i++){
           if(elements[i].type !== 'submit'){
-            const valueOfElement = elements[i].type == 'checkbox' ? elements[i].checked : elements[i].value;
+            let valueOfElement = elements[i].type == 'checkbox' ? elements[i].checked : elements[i].value;
             if(elements[i].name == '_method'){
               method = valueOfElement;
             } else {
@@ -152,8 +157,11 @@ app.bindForms = function(){
           }
         }
 
+        // If the method is DELETE, the payload should be a queryStringObject instead
+        let queryStringObject = method == 'DELETE' ? payload : {};
+
         // Call the API
-        app.client.request(undefined,path,method,undefined,payload,function(statusCode,responsePayload){
+        app.client.request(undefined,path,method,queryStringObject,payload,function(statusCode,responsePayload){
           // Display an error on the form if needed
           if(statusCode !== 200){
 
@@ -164,7 +172,7 @@ app.bindForms = function(){
             } else {
 
               // Try to get the error from the api, or set a default error message
-              const error = typeof(responsePayload.Error) == 'string' ? responsePayload.Error : 'An error has occured, please try again';
+              let error = typeof(responsePayload.Error) == 'string' ? responsePayload.Error : 'An error has occured, please try again';
 
               // Set the formError field with the error text
               document.querySelector("#"+formId+" .formError").innerHTML = error;
@@ -185,11 +193,11 @@ app.bindForms = function(){
 
 // Form response processor
 app.formResponseProcessor = function(formId,requestPayload,responsePayload){
-  const functionToCall = false;
+  let functionToCall = false;
   // If account creation was successful, try to immediately log the user in
   if(formId == 'accountCreate'){
     // Take the phone and password, and use it to log the user in
-    const newPayload = {
+    let newPayload = {
       'phone' : requestPayload.phone,
       'password' : requestPayload.password
     };
@@ -218,19 +226,25 @@ app.formResponseProcessor = function(formId,requestPayload,responsePayload){
   }
 
   // If forms saved successfully and they have success messages, show them
-  const formsWithSuccessMessages = ['accountEdit1', 'accountEdit2'];
+  let formsWithSuccessMessages = ['accountEdit1', 'accountEdit2'];
   if(formsWithSuccessMessages.indexOf(formId) > -1){
     document.querySelector("#"+formId+" .formSuccess").style.display = 'block';
+  }
+
+  // If the user just deleted their account, redirect them to the account-delete page
+  if(formId == 'accountEdit3'){
+    app.logUserOut(false);
+    window.location = '/account/deleted';
   }
 
 };
 
 // Get the session token from localstorage and set it in the app.config object
 app.getSessionToken = function(){
-  const tokenString = localStorage.getItem('token');
+  let tokenString = localStorage.getItem('token');
   if(typeof(tokenString) == 'string'){
     try{
-      const token = JSON.parse(tokenString);
+      let token = JSON.parse(tokenString);
       app.config.sessionToken = token;
       if(typeof(token) == 'object'){
         app.setLoggedInClass(true);
@@ -246,7 +260,7 @@ app.getSessionToken = function(){
 
 // Set (or remove) the loggedIn class from the body
 app.setLoggedInClass = function(add){
-  const target = document.querySelector("body");
+  let target = document.querySelector("body");
   if(add){
     target.classList.add('loggedIn');
   } else {
@@ -257,7 +271,7 @@ app.setLoggedInClass = function(add){
 // Set the session token in the app.config object as well as localstorage
 app.setSessionToken = function(token){
   app.config.sessionToken = token;
-  const tokenString = JSON.stringify(token);
+  let tokenString = JSON.stringify(token);
   localStorage.setItem('token',tokenString);
   if(typeof(token) == 'object'){
     app.setLoggedInClass(true);
@@ -268,10 +282,10 @@ app.setSessionToken = function(token){
 
 // Renew the token
 app.renewToken = function(callback){
-  const currentToken = typeof(app.config.sessionToken) == 'object' ? app.config.sessionToken : false;
+  let currentToken = typeof(app.config.sessionToken) == 'object' ? app.config.sessionToken : false;
   if(currentToken){
     // Update the token with a new expiration
-    const payload = {
+    let payload = {
       'id' : currentToken.id,
       'extend' : true,
     };
@@ -279,7 +293,7 @@ app.renewToken = function(callback){
       // Display an error on the form if needed
       if(statusCode == 200){
         // Get the new token details
-        const queryStringObject = {'id' : currentToken.id};
+        let queryStringObject = {'id' : currentToken.id};
         app.client.request(undefined,'api/tokens','GET',queryStringObject,undefined,function(statusCode,responsePayload){
           // Display an error on the form if needed
           if(statusCode == 200){
@@ -304,8 +318,8 @@ app.renewToken = function(callback){
 // Load data on the page
 app.loadDataOnPage = function(){
   // Get the current page from the body class
-  const bodyClasses = document.querySelector("body").classList;
-  const primaryClass = typeof(bodyClasses[0]) == 'string' ? bodyClasses[0] : false;
+  let bodyClasses = document.querySelector("body").classList;
+  let primaryClass = typeof(bodyClasses[0]) == 'string' ? bodyClasses[0] : false;
 
   // Logic for account settings page
   if(primaryClass == 'accountEdit'){
@@ -316,10 +330,10 @@ app.loadDataOnPage = function(){
 // Load the account edit page specifically
 app.loadAccountEditPage = function(){
   // Get the phone number from the current token, or log the user out if none is there
-  const phone = typeof(app.config.sessionToken.phone) == 'string' ? app.config.sessionToken.phone : false;
+  let phone = typeof(app.config.sessionToken.phone) == 'string' ? app.config.sessionToken.phone : false;
   if(phone){
     // Fetch the user data
-    const queryStringObject = {
+    let queryStringObject = {
       'phone' : phone
     };
     app.client.request(undefined,'api/users','GET',queryStringObject,undefined,function(statusCode,responsePayload){
@@ -330,8 +344,8 @@ app.loadAccountEditPage = function(){
         document.querySelector("#accountEdit1 .displayPhoneInput").value = responsePayload.phone;
 
         // Put the hidden phone field into both forms
-        const hiddenPhoneInputs = document.querySelectorAll("input.hiddenPhoneNumberInput");
-        for(const i = 0; i < hiddenPhoneInputs.length; i++){
+        let hiddenPhoneInputs = document.querySelectorAll("input.hiddenPhoneNumberInput");
+        for(let i = 0; i < hiddenPhoneInputs.length; i++){
             hiddenPhoneInputs[i].value = responsePayload.phone;
         }
 
