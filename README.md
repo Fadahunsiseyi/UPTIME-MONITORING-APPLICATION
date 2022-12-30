@@ -5,7 +5,7 @@
 > Building a RESTFUL API for an uptime monitoring application. It allows users to enter URLs they want monitored, and receives alerts when those resources go down and come up.
 > The API listens on a PORT and accepts incoming HTTP requests for POST,GET,PUT and DELETE requests.
 > The API allows a client to connect, then create a new user, then edit and delete that user. The API allows a user to SIGN  IN which gives them a token that they can use for subsequent authenticated requests. The API allows the users to SIGN OUT,
- which invalidates their token...
+ which invalidates their tokens.
 
 ## Live Demo
 
