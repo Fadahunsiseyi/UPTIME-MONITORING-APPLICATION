@@ -34,6 +34,21 @@ _app.tests.unit['helpers.getANumber should return 2'] = (done)=>{
     done()
 }
 
+// _app.countTests = () =>{
+//     let counter = 0
+//     for(let key in _app.tests){
+//         if(_app.tests.hasOwnProperty(key)){
+//             const subTests = _app.tests[key]
+//             for(let testName in subTests){
+//                 if(subTests.hasOwnProperty(testName)){
+//                     counter += 1
+//                 }
+//             }
+//         }
+//     }
+//     return counter
+// }
+
 
 
 
