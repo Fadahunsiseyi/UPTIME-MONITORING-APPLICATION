@@ -90,6 +90,29 @@ _app.tests.unit['helpers.getANumber should return 2'] = (done)=>{
 //     return counter
 // }
 
+// _app.produceTestReport = (limit,success,errors) =>{
+//     console.log("")
+//    console.log('-------- BEGIN TEST REPORT------------')
+//    console.log("")
+//    console.log("Total Tests: ",limit)
+//    console.log("Pass: ",success)
+//    console.log("Failed Tests: ",errors.length)
+//    console.log("")
+
+//    if(errors.length > 0){
+//     console.log("---------BEGIN ERROR DETAILS------------")
+//     console.log("")
+//     errors.forEach((testError)=>{
+//         console.log('\x1b[31m%s\x1b[0m',testError.name)
+//         console.log(testError.error)
+//     })
+//     console.log("")
+//     console.log("---------END ERROR DETAILS------------")
+//    }
+
+//    console.log("")
+//    console.log("---------END TEST REPORT------------")
+// }
 
 
 
