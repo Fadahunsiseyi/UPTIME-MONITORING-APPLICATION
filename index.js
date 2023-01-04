@@ -9,7 +9,7 @@ const cli = require('./lib/cli');
 //Declare the application
 const app = {};
 
-app.init = () => {
+app.init = (callback) => {
   //Start the server
   server.init();
   //Start the workers
@@ -17,9 +17,17 @@ app.init = () => {
   //making the CLI start last with setTIMEOUT(macro tasks)
   setTimeout(() => {
     cli.init()
+    callback()
   }, 50);
 }
 
-app.init()
+//self invoking only if required directly
+
+if(require.main === module){
+app.init(()=>{})
+}
+
+
+
 
 module.exports = app;
