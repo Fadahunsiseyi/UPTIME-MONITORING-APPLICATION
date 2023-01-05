@@ -1,1 +1,0 @@
-{"check":{"id":"rhpchxykk3n8hvsjh2uk","userPhone":"08023212121","protocol":"https","url":"gmail.com","method":"put","successCodes":[200,202],"timeoutSeconds":2,"state":"down","lastChecked":false},"outcome":{"error":false,"responseCode":301},"state":"down","alert":false,"time":1672869935841}
