@@ -3,7 +3,7 @@
 const async_hooks = require('async_hooks');
 const fs = require('fs');
 
-let targetExecutionContext = false
+
 
 
 const whatTimeIsIt = (callback)=>{
