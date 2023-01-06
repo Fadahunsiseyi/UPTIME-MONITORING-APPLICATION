@@ -20,7 +20,7 @@ whatTimeIsIt((time)=>{
 
 
 const hooks = {
-    init(asyncId){
+    init(asyncId,type,triggerAsyncId,resource){
         fs.writeSync(1,'Hook init '+asyncId+'\n ')
     },
     before(asyncId){
